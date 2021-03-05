@@ -1,0 +1,13 @@
+how many players ?Traceback (most recent call last):
+  File "Server.py", line 23, in <module>
+    amount = input("how many players ?")
+OSError: [Errno 9] Bad file descriptor
+Traceback (most recent call last):
+  File "Server.py", line 27, in <module>
+    conn, addr = s.client.accept()
+  File "/usr/lib/python3.6/socket.py", line 205, in accept
+    fd, addr = self._accept()
+KeyboardInterrupt
+connected
+connected
+User disconnected disconnected
