@@ -215,7 +215,7 @@ def draw_event_card(user, board, users, server_controller, custom_card=0, use_cu
             if i != user:
                 user.debt.append([i.id, 1000])
     elif card == 9:
-        sc.request("str", "The Bank be like MoNeTeN +3000$", user)
+        sc.request("str", "The Bank be like MONETEN +3000$", user)
         user.money += 3000
     elif card == 10:
         sc.request("str", "3 Steps back", user)
@@ -300,7 +300,7 @@ def draw_community_card(user, board, users, server_controller, custom_card=0, us
         sc.request("str", "You were in a beauty-contest someone had pity with you and gave you 200$", user)
         user.money += 200
     elif card == 6:
-        sc.request("str", "You broke your COCK -2000$ doctor costs", user)
+        sc.request("str", "You broke your arm -2000$ doctor costs", user)
         user.debt.append(["SYSTEM", 2000])
     elif card == 7:
         sc.request("str", "You robbed a bank +4000$", user)
