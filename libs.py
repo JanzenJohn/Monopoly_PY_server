@@ -108,14 +108,8 @@ class Field():
 
 
 def read_file(file, length, use_length=True, insert_before=False):
-    print("here2")
-    try:
-        print(f"file name = /monopoly/{file}")
-        print(sys.stdout.encoding)
-        list = open("/monopoly/"+str(file), "r", encoding="utf-8").readlines()
-    except Exception as e:
-        print(e)
-    print("file cor")
+    print(sys.stdout.encoding)
+    list = open(str(file), "r", encoding="utf-8").readlines()
     for i in range(len(list)):
         list[i] = list[i].replace("\n", "")
         if use_length:
