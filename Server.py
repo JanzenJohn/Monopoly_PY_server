@@ -177,7 +177,7 @@ while True:
                         UNDERLINE = ''
                     s.send("str", "WINDOWS MODE", to_send)
                     old_board(to_send)
-                elif not to_send.OS.startswith("GUI"):
+                else:
                     class bcolors:
                         HEADER = '\033[95m'
                         OKBLUE = '\033[94m'
@@ -190,25 +190,7 @@ while True:
                         UNDERLINE = '\033[4m'
                     s.send("str", "POSIX MODE", to_send)
                     old_board(to_send)
-                else:
-                    try:
-                        s.send("str", "BOARD", to_send)
-                        print(f"sent \"BOARD\" indicator to {to_send.name}")
-                        s.send("obj", sc.board, to_send)
-                        print(f"sent board to {to_send.name}")
-                        clean_users = []
-                        for i in range(len(sc.users)):
-                            clean_users.append(libs.Player())
-                            clean_users[i].money = sc.users[i].money
-                            clean_users[i].id = sc.users[i].id
-                            clean_users[i].position = sc.users[i].position
-                            clean_users[i].in_prison = sc.users[i].in_prison
-                        s.send("obj", clean_users, to_send)
-                        print(f"sent clean to {to_send.name}")
-                    except BrokenPipeError:
-                        print(f"Error at sending to {to_send.name}")
-                        pass
-
+                
 
 
     print("creating servercontroller")
@@ -603,8 +585,8 @@ while True:
                         except ValueError:
                             s.request("str", "syntax error", user)
                     elif trade_structure[0] == "print":
-                        s.request("obj", requests, user)
-                        s.request("obj", offers, user)
+                        s.request("str", f"offers : {offers}", user)
+                        s.request("str", f"requests : {requests}", user)
                     elif trade_structure[0] == "try":
                         s.request("str", f"{user.name} wants to trade", to_trade_with)
                         s.request("str", "the player wants : ", to_trade_with)
