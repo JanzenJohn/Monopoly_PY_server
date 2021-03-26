@@ -1,5 +1,5 @@
 import socket
-import pickle
+import json
 
 
 class Network:
@@ -19,11 +19,11 @@ class Network:
             if not header:
                 raise(BrokenPipeError)
                 return
-            header = pickle.loads(header)
+            header = header.decode("utf-8")
+            header = json.loads(header)
+
             data = conn.recv(header["message_length"])
-            if header["type"] == "obj":
-                data = pickle.dumps(data)
-            elif header["type"] == "str":
+            if header["type"] == "str":
                 data = data.decode("utf-8")
             return data
         except BrokenPipeError:
@@ -34,9 +34,7 @@ class Network:
     def send(self, data_type, data, user):
         try:
             conn = user.conn
-            if data_type == "obj":
-                array = pickle.dumps(data)
-            elif data_type == "str":
+            if data_type == "str":
                 array = str.encode(data)
             else:
                 return
@@ -44,7 +42,8 @@ class Network:
             if header["message_length"] == 0:
                 header["message_length"] = 1
                 array = b'-'
-            header_array = pickle.dumps(header)
+            header_array = json.dumps(header)
+            header_array = header_array.encode("utf-8")
             header_length = len(header_array)
             header_length = int.to_bytes(header_length, 8, "little")
             conn.sendall(header_length)
@@ -55,14 +54,13 @@ class Network:
     def request(self, data_type, data, user, force_strings=True):
         try:
             conn = user.conn
-            if data_type == "obj":
-                array = pickle.dumps(data)
-            elif data_type == "str":
+            if data_type == "str":
                 array = str.encode(data)
             else:
                 return
             header = {"type": data_type, "message_length": len(array), "request": True}
-            header_array = pickle.dumps(header)
+            header_array = json.dumps(header)
+            header_array = header_array.encode("utf-8")
             header_length = len(header_array)
             header_length = int.to_bytes(header_length, 8, "little")
             conn.sendall(header_length)
